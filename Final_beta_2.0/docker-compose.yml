@@ -1,0 +1,31 @@
+version: "3"
+services:
+  requirement:
+    build: .
+    depends_on:
+      - tile38
+      - redis
+      - mqtt
+    command: sh -c "python3 periodic_update.py & python3 new_web_socket.py & python3 new_redis_mqtt.py"
+    env_file: .env
+
+  mqtt:
+    image: eclipse-mosquitto:latest
+    restart: always
+    ports:
+      - 1883:1883
+      - 9001:9001
+
+  tile38:
+    image: tile38/tile38:latest
+    env_file: .env
+    ports:
+      - 9851:9851
+  redis:
+    image: "redis:alpine"
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - 6379:6379
+    depends_on:
+      - tile38
