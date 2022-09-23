@@ -3,4 +3,4 @@ python-dotenv==0.10.3
 redis==3.3.11
 websocket-client==0.56.0
 websockets==8.1
-protobuf==3.11.2
+protobuf==3.18.3
